@@ -1,4 +1,10 @@
 import tkinter as tk
+import unicodedata
+
+def remover_acentos(texto):
+    # Transforma 'ç' em 'c', 'ó' em 'o', etc.
+    return ''.join(c for c in unicodedata.normalize('NFD', texto)
+                   if unicodedata.category(c) != 'Mn')
 
 from dominio.livro import Livro
 from dominio.usuario import Usuario
@@ -49,10 +55,14 @@ def livro_selecionado():
 
 
 def emprestar():
-    procurado = campo.get()
+    # Pega o texto, tira espaços sobrando e remove acentos
+    procurado = remover_acentos(campo.get()).lower().strip()
     escolhido = None
+    
     for item in repositorio.listar():
-        if item.titulo.lower() == procurado.lower():
+        # Faz a mesma limpeza no título do banco antes de comparar
+        titulo_limpo = remover_acentos(item.titulo).lower().strip()
+        if procurado in titulo_limpo:
             escolhido = item
             break
 
