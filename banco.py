@@ -47,8 +47,8 @@ cursor.execute (
 
 print(cursor.fetchone())
 
-cursor.execute("UPDATE livro SET ano = ? WHERE id = ?",
-               )
+cursor.execute("UPDATE livro SET ano = ? WHERE id = ?", (2001,1))
+               
 
 cursor.execute("DELETE FROM livro WHERE id = ?", (3,))
 
