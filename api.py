@@ -1,10 +1,18 @@
 import uvicorn
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from dominio.livro import Livro
 from dados.repositorio_livro import RepositorioLivro
 
 app = FastAPI()
 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allor_methods=["*"],
+    allow_headers=["*"],   
+)
 
 def para_dict(livro):
     return {
